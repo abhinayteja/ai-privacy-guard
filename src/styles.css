@@ -1,0 +1,208 @@
+/* AI Privacy Guard — Injected Warning Card & Mini Floating Pill
+   All styling is strictly encapsulated under #apg-root to avoid host page styling pollution. */
+
+#apg-root {
+  all: initial;
+  position: fixed;
+  right: 24px;
+  bottom: 84px;
+  z-index: 2147483647;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --apg-bg: rgba(18, 18, 22, 0.92);
+  --apg-border: rgba(255, 255, 255, 0.12);
+  --apg-text: #f4f4f5;
+  --apg-muted: #a1a1aa;
+  --apg-accent: #3b82f6;
+  --apg-accent-hover: #2563eb;
+  --apg-critical: #ef4444;
+  --apg-high: #f97316;
+  --apg-medium: #eab308;
+  --apg-low: #10b981;
+}
+
+#apg-root *,
+#apg-root *::before,
+#apg-root *::after {
+  box-sizing: border-box;
+  font-family: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* ---------- Card Layout & Backdrop ---------- */
+#apg-root .apg-card {
+  width: 310px;
+  padding: 14px 16px;
+  color: var(--apg-text);
+  background: var(--apg-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--apg-border);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  font-size: 13px;
+  line-height: 1.45;
+  animation: apg-slide-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+#apg-root .apg-wide { width: 360px; }
+#apg-root .apg-compact { padding-bottom: 12px; }
+
+@keyframes apg-slide-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Header ---------- */
+#apg-root .apg-header { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+#apg-root .apg-title { flex: 1; font-size: 13.5px; font-weight: 600; color: var(--apg-text); letter-spacing: -0.01em; }
+
+#apg-root .apg-icon {
+  display: grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+#apg-root .apg-shield { width: 15px; height: 15px; fill: currentColor; }
+
+#apg-root .apg-icon-btn {
+  all: unset;
+  width: 22px; height: 22px; border-radius: 5px;
+  display: grid; place-items: center;
+  color: var(--apg-muted); font-size: 16px; line-height: 1; cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+#apg-root .apg-icon-btn:hover { background: rgba(255, 255, 255, 0.12); color: var(--apg-text); }
+#apg-root .apg-icon-btn:focus-visible { outline: 2px solid var(--apg-accent); outline-offset: 1px; }
+
+/* ---------- Body & Lists ---------- */
+#apg-root .apg-sub { margin: 8px 0 6px; color: var(--apg-muted); font-size: 12px; }
+
+#apg-root .apg-list,
+#apg-root .apg-review-list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 5px;
+}
+
+#apg-root .apg-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 10px; border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+#apg-root .apg-item-label { color: var(--apg-text); font-weight: 500; font-size: 12px; }
+#apg-root .apg-count { margin-left: auto; color: var(--apg-muted); font-size: 11px; font-weight: 600; }
+
+#apg-root .apg-dot {
+  flex: none; width: 8px; height: 8px; border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+#apg-root .apg-critical { color: var(--apg-critical); }
+#apg-root .apg-high     { color: var(--apg-high); }
+#apg-root .apg-medium   { color: var(--apg-medium); }
+#apg-root .apg-low      { color: var(--apg-low); }
+
+#apg-root .apg-risk {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 10px; color: var(--apg-muted); font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+#apg-root .apg-badge {
+  padding: 3px 8px; border-radius: 5px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+#apg-root .apg-note {
+  margin: 10px 0 0; padding: 7px 10px; border-radius: 7px;
+  color: var(--apg-muted); font-size: 11px; line-height: 1.4;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--apg-border);
+}
+
+/* ---------- Review list ---------- */
+#apg-root .apg-review-list {
+  max-height: 220px; overflow-y: auto; margin-top: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+#apg-root .apg-review-list::-webkit-scrollbar { width: 4px; }
+#apg-root .apg-review-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+
+#apg-root .apg-review-item {
+  padding: 7px 10px; border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+#apg-root .apg-review-label { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+#apg-root .apg-check { accent-color: var(--apg-accent); width: 14px; height: 14px; margin: 0; cursor: pointer; }
+#apg-root .apg-review-text { display: flex; flex-direction: column; min-width: 0; }
+
+#apg-root .apg-masked {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px; color: var(--apg-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: none; padding: 0; margin-top: 1px;
+}
+
+#apg-root .apg-arrow {
+  display: block; margin: 3px 0 0 37px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10.5px; color: #93c5fd; font-weight: 500;
+}
+
+/* ---------- Buttons ---------- */
+#apg-root .apg-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+#apg-root .apg-btn {
+  all: unset;
+  flex: 1; text-align: center; cursor: pointer;
+  padding: 8px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 600;
+  transition: background 150ms ease, opacity 150ms ease, transform 100ms ease;
+}
+#apg-root .apg-btn:active { transform: scale(0.98); }
+#apg-root .apg-btn:focus-visible { outline: 2px solid var(--apg-accent); outline-offset: 2px; }
+#apg-root .apg-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+#apg-root .apg-primary {
+  color: #ffffff;
+  background: var(--apg-accent);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+}
+#apg-root .apg-primary:hover:not([disabled]) { background: var(--apg-accent-hover); }
+
+#apg-root .apg-ghost {
+  color: var(--apg-text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--apg-border);
+}
+#apg-root .apg-ghost:hover { background: rgba(255, 255, 255, 0.13); }
+
+/* ---------- Minimized Pill ---------- */
+#apg-root .apg-pill {
+  all: unset;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px; border-radius: 20px; cursor: pointer;
+  font-size: 12px; font-weight: 600;
+  background: var(--apg-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--apg-border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  animation: apg-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 150ms ease, transform 100ms ease;
+}
+#apg-root .apg-pill span { color: var(--apg-text); }
+#apg-root .apg-pill:hover { background: rgba(30, 30, 36, 0.95); transform: translateY(-1px); }
+#apg-root .apg-pill:focus-visible { outline: 2px solid var(--apg-accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  #apg-root .apg-card, #apg-root .apg-pill { animation: none; }
+}
+

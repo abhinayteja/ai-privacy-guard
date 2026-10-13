@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "AI Privacy Guard",
+  "version": "0.2.0",
+  "description": "See what you're about to share with AI — before it leaves your browser. Detects secrets and personal data locally across all AI websites.",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "AI Privacy Guard",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/detector.js", "src/risk.js", "src/redactor.js", "src/content.js"],
+      "css": ["src/styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
